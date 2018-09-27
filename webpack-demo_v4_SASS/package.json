@@ -9,6 +9,9 @@
 		"prebuild": "node-sass --include-path scss ./src/sass/company-style.scss   dist/company-style.css",
 		"build": "webpack --mode production"
 	},
+	"backup-scripts": {
+		"prebuild": "node-sass --include-path scss ./src/sass/company-style.scss   dist/company-style.css"
+	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",

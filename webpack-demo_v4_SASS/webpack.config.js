@@ -61,10 +61,16 @@ var cssConfig = merge( config,{
         rules: [
             {
                 test: /\.scss$/,
-                /*use: [{
-                    loader: 'sass-loader'
-                }]*/
+                use: [{
+                    loader: 'sass-loader',
+                    options: {
+                        sourceMap: true,
+                        output: path.resolve(__dirname, 'dist')
+                    }
+                }]
+                /* same as above, use if less details required
                 use: ['sass-loader']
+                */
             }
         ]
     }
