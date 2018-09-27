@@ -1,5 +1,5 @@
 # Webpack step by step
-A Beginner’s Guide to Webpack 4 and Module Bundling
+A Beginnerï¿½s Guide to Webpack 4 and Module Bundling
 https://www.sitepoint.com/beginners-guide-webpack-module-bundling/
 src https://github.com/markbrown4/webpack-demo
 
@@ -50,3 +50,9 @@ $ npm run develop
 	- modify Background in style.scss
 - run >npm run develop
 	- confirm added image and change background
+	
+## Build CSS from SCSS
+- use sass-loader in webpack.config.js -> produce javascript
+- use node-sass in package.json as prebuild step
+    - "prebuild": "node-sass --include-path scss ./src/sass/company-style.scss   dist/company-style.css",
+    - see [compile your sass with npm](https://medium.com/@brianhan/watch-compile-your-sass-with-npm-9ba2b878415b)
