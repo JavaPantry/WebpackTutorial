@@ -53,7 +53,7 @@ var cssConfig = merge( config,{
     name: "css-bundle",
     entry: "./src/sass/company-style.scss",
     output: {
-        filename: "company-style.css",
+        filename: "company-style.js",
         path: path.resolve(__dirname, 'dist')
     },
 
