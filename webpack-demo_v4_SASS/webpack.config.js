@@ -1,3 +1,5 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production'
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const path = require('path')
@@ -14,7 +16,7 @@ var config = {
                 }
             }
 
-            ,{
+            /*,{
                 test: /\.scss$/,
                 use: [{
                     loader: 'style-loader'
@@ -23,7 +25,7 @@ var config = {
                 }, {
                     loader: 'sass-loader'
                 }]
-            }
+            }*/
 
             ,{
                 test: /\.(png|svg|jpg|gif)$/,
@@ -44,7 +46,29 @@ var bundleConfig = merge( config, {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, 'dist')
+    },
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: 'style-loader'
+                    },
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
+                    }
+                ]
+                /* same as above, use if less details required
+                use: ['sass-loader']
+                */
+            }
+        ]
     }
+
 });
 
 
@@ -57,17 +81,31 @@ var cssConfig = merge( config,{
         path: path.resolve(__dirname, 'dist')
     },
 
+    plugins: [
+        new MiniCssExtractPlugin({
+            // Options similar to the same options in webpackOptions.output
+            // both options are optional
+            filename: devMode ? '[name].css' : '[name].[hash].css'
+            //chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+        })
+    ],
+
     module: {
         rules: [
             {
                 test: /\.scss$/,
-                use: [{
-                    loader: 'sass-loader',
-                    options: {
-                        sourceMap: true,
-                        output: path.resolve(__dirname, 'dist')
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    /*{
+                        loader: 'style-loader'
+                    },*/
+                    {
+                        loader: 'css-loader'
+                    },
+                    {
+                        loader: 'sass-loader'
                     }
-                }]
+                ]
                 /* same as above, use if less details required
                 use: ['sass-loader']
                 */

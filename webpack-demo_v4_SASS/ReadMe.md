@@ -51,8 +51,43 @@ $ npm run develop
 - run >npm run develop
 	- confirm added image and change background
 	
-## Build CSS from SCSS
+## Build CSS from SCSS with npm
 - use sass-loader in webpack.config.js -> produce javascript
 - use node-sass in package.json as prebuild step
     - "prebuild": "node-sass --include-path scss ./src/sass/company-style.scss   dist/company-style.css",
     - see [compile your sass with npm](https://medium.com/@brianhan/watch-compile-your-sass-with-npm-9ba2b878415b)
+
+## Build CSS from SCSS with webpack
+     
+[See](https://stackoverflow.com/questions/52526694/how-to-configure-sass-loader-to-produce-only-css-from-scss)
+webpack-demo_v4_SASS>npm install --save-dev mini-css-extract-plugin
+
+add to webpack.config
+```js
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== 'production';
+
+module.exports = {
+  plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // both options are optional
+      filename: devMode ? '[name].css' : '[name].[hash].css',
+      chunkFilename: devMode ? '[id].css' : '[id].[hash].css',
+    })
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader',
+          'sass-loader',
+        ],
+      }
+    ]
+  }
+}
+```
